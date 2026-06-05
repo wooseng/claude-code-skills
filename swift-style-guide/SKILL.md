@@ -1,6 +1,6 @@
 ---
 name: swift-style-guide
-description: 以 Kodeco's Swift 代码风格指南为基础的Swift代码风格指南，在写Swift代码时使用
+description: Swift代码风格指南，当用户在需要审查Swift代码风格或者编辑.swift文件时使用此技能，助力写出清晰、简洁、优雅的Swift代码
 user-invocable: false
 license: MIT
 ---
@@ -173,3 +173,31 @@ let success = reticulateSplines(
   }
   ```
 - 守卫语句必须以某种方式退出，避免使用大型代码块。如果多个退出点需要清理代码，可考虑使用 defer 块来避免清理代码重复。
+
+## 视图属性定义
+
+在类中定义视图属性时，采用懒加载和匿名函数的方式来实现，匿名函数中生成的用于返回的视图实例使用`tmp`，所有属性定义在匿名函数中实现，示例：
+```swift
+private lazy var loginButton: UIButton = {
+  let tmp = UIButton()
+    tmp.setTitleColor(.black, for: .normal)
+    tmp.setTitleColor(.white, for: .selected)
+    tmp.backgroundColor = .white
+    tmp.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+    tmp.isSelected = true
+    tmp.layer.cornerRadius = 4
+    tmp.isUserInteractionEnabled = false
+  return tmp
+}()
+```
+
+## 布局
+优先采用`UIStackView`来实现，尤其是存在需要动态显示隐藏视图的时候，以便直接通过`isHidden`属性来控制，不需要修改约束。
+在使用`SnapKit`设置约束时，顶部和底部安全区域应该相对于目标视图的`snp.topMargin`和`snp.bottomMargin`，设置约束时不需要显示声明闭包内的参数名，直接使用`$0`，左右方向优先采用`leading`和`trailing`，示例：
+```swift
+listView.snp.makeConstraints {
+  $0.leading.trailing.equalToSuperview()
+  $0.top.equalTo(view.snp.topMargin)
+  $0.bottom.equalTo(view.snp.bottomMargin)
+}
+```
