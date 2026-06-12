@@ -48,17 +48,17 @@ func swap<T>(_ a: inout T, _ b: inout T)
 在为模型添加协议一致性时，优先为协议方法单独创建一个扩展。这样能将相关方法与协议组织在一起，也能简化“为类及其关联方法添加协议”的操作说明，参考示例：
 ```swift
 class MyViewController: UIViewController {
-  // class stuff here
+    // class stuff here
 }
 
 // MARK: - UITableViewDataSource
 extension MyViewController: UITableViewDataSource {
-  // table view data source methods
+    // table view data source methods
 }
 
 // MARK: - UIScrollViewDelegate
 extension MyViewController: UIScrollViewDelegate {
-  // scroll view delegate methods
+    // scroll view delegate methods
 }
 ```
 由于编译器不允许在派生类中重新声明协议遵循，因此并非总是需要复制基类的扩展组。如果派生类是最终类且仅重写少量方法，这种情况尤其如此。是否保留扩展组由作者自行决定。
@@ -105,17 +105,17 @@ extension MyViewController: UIScrollViewDelegate {
 将简短的函数声明写在同一行，包括左大括号，示例：
 ```swift
 func reticulateSplines(spline: [Double]) -> Bool {
-  // reticulate code goes here
+    // reticulate code goes here
 }
 ```
 
 对于签名较长的函数，将每个参数单独放在一行，后续行需额外缩进，示例：
 ```swift
 func reticulateSplines(
-  spline: [Double], 
-  adjustmentFactor: Double,
-  translateConstant: Int, 
-  comment: String
+    spline: [Double], 
+    adjustmentFactor: Double,
+    translateConstant: Int, 
+    comment: String
 ) -> Bool {
 }
 ```
@@ -132,10 +132,11 @@ let success = reticulateSplines(splines)
 如果调用点必须换行，则将每个参数单独放在一行，并额外缩进一级：
 ```swift
 let success = reticulateSplines(
-  spline: splines,
-  adjustmentFactor: 1.3,
-  translateConstant: 2,
-  comment: "normalize the display")
+    spline: splines,
+    adjustmentFactor: 1.3,
+    translateConstant: 2,
+    comment: "normalize the display"
+)
 ```
 
 ## 闭包表达式
@@ -179,7 +180,7 @@ let success = reticulateSplines(
 在类中定义视图属性时，采用懒加载和匿名函数的方式来实现，匿名函数中生成的用于返回的视图实例使用`tmp`，所有属性定义在匿名函数中实现，示例：
 ```swift
 private lazy var loginButton: UIButton = {
-  let tmp = UIButton()
+    let tmp = UIButton()
     tmp.setTitleColor(.black, for: .normal)
     tmp.setTitleColor(.white, for: .selected)
     tmp.backgroundColor = .white
@@ -187,17 +188,27 @@ private lazy var loginButton: UIButton = {
     tmp.isSelected = true
     tmp.layer.cornerRadius = 4
     tmp.isUserInteractionEnabled = false
-  return tmp
+    return tmp
 }()
 ```
 
 ## 布局
-优先采用`UIStackView`来实现，尤其是存在需要动态显示隐藏视图的时候，以便直接通过`isHidden`属性来控制，不需要修改约束。
-在使用`SnapKit`设置约束时，顶部和底部安全区域应该相对于目标视图的`snp.topMargin`和`snp.bottomMargin`，设置约束时不需要显示声明闭包内的参数名，直接使用`$0`，左右方向优先采用`leading`和`trailing`，示例：
+- 优先采用`UIStackView`来实现，尤其是存在需要动态显示隐藏视图的时候，以便直接通过`isHidden`属性来控制，不需要修改约束；
+- 项目中需要设置约束时，如果引入了`SnapKit`库，则优先采用`SnapKit`来设置约束
+
+## 设置SnapKit约束
+在使用`SnapKit`设置约束时遵循以下规则：
+- 顶部和底部安全区域应该相对于目标视图的`snp.topMargin`和`snp.bottomMargin`
+- 设置约束时不需要显示声明闭包内的参数名，直接使用`$0`
+- 左右方向优先采用`leading`和`trailing`
+- 如果要设置基于父视图同方向的偏移值，直接采用`equalTo(10)`这种方式，不要使用`equalToSuperview().offset(10)`
+- 如果要设置相对指定视图指定距离，采用`offset`而不是`inset`
+示例：
 ```swift
 listView.snp.makeConstraints {
-  $0.leading.trailing.equalToSuperview()
-  $0.top.equalTo(view.snp.topMargin)
-  $0.bottom.equalTo(view.snp.bottomMargin)
+    $0.leading.equalTo(10)
+    $0.trailing.equalTo(rightView.snp.leading).offset(-10)
+    $0.top.equalTo(view.snp.topMargin)
+    $0.bottom.equalTo(view.snp.bottomMargin)
 }
 ```
