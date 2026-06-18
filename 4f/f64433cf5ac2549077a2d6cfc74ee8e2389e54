@@ -1,0 +1,18 @@
+swift-style-guide/SKILL.md
+  h_f554c33b1d56b3 29,187
+swift-style-guide/snapkit_layout.md
+  h_f554c33b1d56b3 1-18
+swift-style-guide/delegate.md
+  h_f554c33b1d56b3 1-8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "4ff64433cf5ac2549077a2d6cfc74ee8e2389e54",
+  "prompts": {},
+  "humans": {
+    "h_f554c33b1d56b3": {
+      "author": "wooseng"
+    }
+  }
+}
