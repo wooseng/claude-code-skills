@@ -6,7 +6,6 @@ license: MIT
 ---
 
 # Swift代码风格指南
-
 - 在设计API时参考[API 设计指南](api_design_fuidelines.md)
 - 使用美式英语拼写以匹配 Apple 的 API
 - 使用扩展将代码组织成逻辑功能块。每个扩展都应通过`// MARK: -`注释来分隔，以保持良好的结构。
@@ -27,14 +26,7 @@ license: MIT
 - 在编写长字符串字面量时，使用多行字符串字面量语法
 - 不要在项目中使用表情符号
 - 不使用 `#imageLiteral` 或 `#colorLiteral`
-
-## 委托
-
-创建自定义委托方法时，未命名的第一个参数应作为委托源，参考示例：
-```swift
-func namePickerView(_ namePickerView: NamePickerView, didSelectName name: String)
-func namePickerViewShouldReload(_ namePickerView: NamePickerView) -> Bool
-```
+- 在设计代理、委托时参考[委托设计指南](delegate.md)
 
 ## 泛型
 泛型类型参数应使用描述性的大驼峰命名法命名。当类型名称没有实际意义或特定作用时，可使用传统的单个大写字母，如`T`、`U`或`V`，参考示例：
@@ -161,7 +153,6 @@ let success = reticulateSplines(
 - 对于可选绑定，应尽可能遮蔽原始名称，而不是使用 `unwrappedView` 或 `actualLabel` 这类名称
 
 ## 黄金路径
-
 - 编写带条件判断的代码时，代码的左侧边距应遵循“黄金路径”或“快乐路径”原则。也就是说，不要嵌套 `if` 语句。多个返回语句是可行的，优先选择 `guard`语句。
 - 当使用 `guard` 或 `if let` 解包多个可选值时，应尽可能使用复合版本以减少嵌套。在复合版本中，将 `guard` 单独放在一行，然后将每个条件缩进至各自的行。`else` 子句的缩进应与 `guard` 本身一致，如下所示。示例：
   ```swift
@@ -176,7 +167,6 @@ let success = reticulateSplines(
 - 守卫语句必须以某种方式退出，避免使用大型代码块。如果多个退出点需要清理代码，可考虑使用 defer 块来避免清理代码重复。
 
 ## 视图属性定义
-
 在类中定义视图属性时，采用懒加载和匿名函数的方式来实现，匿名函数中生成的用于返回的视图实例使用`tmp`，所有属性定义在匿名函数中实现，示例：
 ```swift
 private lazy var loginButton: UIButton = {
@@ -194,21 +184,4 @@ private lazy var loginButton: UIButton = {
 
 ## 布局
 - 优先采用`UIStackView`来实现，尤其是存在需要动态显示隐藏视图的时候，以便直接通过`isHidden`属性来控制，不需要修改约束；
-- 项目中需要设置约束时，如果引入了`SnapKit`库，则优先采用`SnapKit`来设置约束
-
-## 设置SnapKit约束
-在使用`SnapKit`设置约束时遵循以下规则：
-- 顶部和底部安全区域应该相对于目标视图的`snp.topMargin`和`snp.bottomMargin`
-- 设置约束时不需要显示声明闭包内的参数名，直接使用`$0`
-- 左右方向优先采用`leading`和`trailing`
-- 如果要设置基于父视图同方向的偏移值，直接采用`equalTo(10)`这种方式，不要使用`equalToSuperview().offset(10)`
-- 如果要设置相对指定视图指定距离，采用`offset`而不是`inset`
-示例：
-```swift
-listView.snp.makeConstraints {
-    $0.leading.equalTo(10)
-    $0.trailing.equalTo(rightView.snp.leading).offset(-10)
-    $0.top.equalTo(view.snp.topMargin)
-    $0.bottom.equalTo(view.snp.bottomMargin)
-}
-```
+- 项目中需要设置约束时，如果引入了`SnapKit`库，则优先采用`SnapKit`来设置约束，并参考[SnapKit布局指南](snapkit_layout.md)
