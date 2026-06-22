@@ -1,0 +1,14 @@
+swift-style-guide/SKILL.md
+  h_f554c33b1d56b3 13,148-158
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "d81e6a15f3e15f50ddd397bb4f042cad460d4065",
+  "prompts": {},
+  "humans": {
+    "h_f554c33b1d56b3": {
+      "author": "wooseng"
+    }
+  }
+}
