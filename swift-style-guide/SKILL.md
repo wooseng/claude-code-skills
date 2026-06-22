@@ -183,6 +183,7 @@ private lazy var loginButton: UIButton = {
     return tmp
 }()
 ```
+如果不需要对视图进行额外配置，那么直接使用 `private lazy var loginButton = UIButton()` 即可，不需要额外采用匿名方法来实现
 
 ## 布局
 - 优先采用`UIStackView`来实现，尤其是存在需要动态显示隐藏视图的时候，以便直接通过`isHidden`属性来控制，不需要修改约束；
