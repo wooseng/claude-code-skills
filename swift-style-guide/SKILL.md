@@ -27,6 +27,8 @@ license: MIT
 - 不要在项目中使用表情符号，日志输出等文本内容除外
 - 不使用 `#imageLiteral` 或 `#colorLiteral`
 - 在设计代理、委托时参考[委托设计指南](delegate.md)
+- 函数的声明与调用需要参考[函数声明与调用](func_define_use.md)
+- 在对视图进行布局时需要参考[视图布局](layout.md)
 
 ## 泛型
 泛型类型参数应使用描述性的大驼峰命名法命名。当类型名称没有实际意义或特定作用时，可使用传统的单个大写字母，如`T`、`U`或`V`，参考示例：
@@ -94,49 +96,11 @@ extension MyViewController: UIScrollViewDelegate {
 ## 计算属性
 - 如果某个计算属性是只读的，则省略 get 子句
 
-## 函数声明
-将简短的函数声明写在同一行，包括左大括号，示例：
-```swift
-func reticulateSplines(spline: [Double]) -> Bool {
-    // reticulate code goes here
-}
-```
-
-对于签名较长的函数，将每个参数单独放在一行，后续行需额外缩进，示例：
-```swift
-func reticulateSplines(
-    spline: [Double], 
-    adjustmentFactor: Double,
-    translateConstant: Int, 
-    comment: String
-) -> Bool {
-}
-```
-
-不要使用 `(Void)` 表示输入为空；直接使用`()`。闭包和函数输出请使用 `Void` 而非 `()`。
-
-## 函数调用
-
-在调用点处镜像函数声明的风格。适合单行显示的调用应按如下方式编写：
-```swift
-let success = reticulateSplines(splines)
-```
-
-如果调用点必须换行，则将每个参数单独放在一行，并额外缩进一级：
-```swift
-let success = reticulateSplines(
-    spline: splines,
-    adjustmentFactor: 1.3,
-    translateConstant: 2,
-    comment: "normalize the display"
-)
-```
-
 ## 闭包表达式
 - 仅当参数列表末尾仅有一个闭包表达式参数时，才使用尾随闭包语法。为闭包参数指定具有描述性的名称。
 - 对于上下文清晰的单表达式闭包，使用隐式返回
 - 使用尾随闭包的链式方法在语境中应清晰易读。关于空格、换行符的使用，以及何时使用命名参数与匿名参数，自行决定
-- 在使用尾随闭包时，非必要时直接使用`{}`而不是`({})`，例如：`list.map { $0 }`
+- 在使用尾随闭包时，优先使用`{}`，非必要避免使用`({})`，例如：`list.map { $0 }`
 
 ## 类型
 - 在可用时始终使用 Swift 的原生类型和表达式。Swift 提供了与 Objective-C 的桥接功能，因此你仍可根据需要使用全部方法。
@@ -167,6 +131,7 @@ let success = reticulateSplines(
 
 ## 黄金路径
 - 编写带条件判断的代码时，代码的左侧边距应遵循“黄金路径”或“快乐路径”原则。也就是说，不要嵌套 `if` 语句。多个返回语句是可行的，优先选择 `guard`语句。
+- 当使用`guard`和`if`解包时，如果解包后的名字与原来的名字一样，只需要写一个，例如`guard let self else { return }`和`if let self { }`
 - 当使用 `guard` 或 `if let` 解包多个可选值时，应尽可能使用复合版本以减少嵌套。在复合版本中，将 `guard` 单独放在一行，然后将每个条件缩进至各自的行。`else` 子句的缩进应与 `guard` 本身一致，如下所示。示例：
   ```swift
   guard 
@@ -196,7 +161,3 @@ private lazy var loginButton: UIButton = {
 ```
 如果不需要对视图进行额外配置，那么直接使用 `private lazy var loginButton = UIButton()` 即可，不需要额外采用匿名方法来实现
 在设置按钮不同状态的属性时，如果没有指定状态，则直接将 `[]` 赋值给状态，例如 `btn.setTitleColor(.black, for: [])`
-
-## 布局
-- 优先采用`UIStackView`来实现，尤其是存在需要动态显示隐藏视图的时候，以便直接通过`isHidden`属性来控制，不需要修改约束；
-- 项目中需要设置约束时，如果引入了`SnapKit`库，则优先采用`SnapKit`来设置约束，并参考[SnapKit布局指南](snapkit_layout.md)
