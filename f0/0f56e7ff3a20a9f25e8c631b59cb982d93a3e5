@@ -1,0 +1,18 @@
+swift-style-guide/layout.md
+  h_51aaa67b256e52 1-22
+swift-style-guide/func_define_use.md
+  h_51aaa67b256e52 1-39
+swift-style-guide/SKILL.md
+  h_51aaa67b256e52 30-31,103,134
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f00f56e7ff3a20a9f25e8c631b59cb982d93a3e5",
+  "prompts": {},
+  "humans": {
+    "h_51aaa67b256e52": {
+      "author": "wooseng <zhanbaocheng@jtexpress.com>"
+    }
+  }
+}
