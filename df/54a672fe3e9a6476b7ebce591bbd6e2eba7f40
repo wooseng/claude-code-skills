@@ -1,0 +1,14 @@
+swift-style-guide/func_define_use.md
+  h_51aaa67b256e52 4-5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "df54a672fe3e9a6476b7ebce591bbd6e2eba7f40",
+  "prompts": {},
+  "humans": {
+    "h_51aaa67b256e52": {
+      "author": "wooseng <zhanbaocheng@jtexpress.com>"
+    }
+  }
+}
