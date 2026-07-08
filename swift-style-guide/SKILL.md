@@ -1,6 +1,6 @@
 ---
 name: swift-style-guide
-description: Swift代码风格指南，当用户在需要审查Swift代码风格或者编辑.swift文件时使用此技能，助力写出清晰、简洁、优雅的Swift代码
+description: Swift代码风格指南，助力写出清晰、简洁、优雅的Swift代码，当用户在编辑swift代码、或者优化Swift代码风格时使用此技能
 user-invocable: false
 license: MIT
 ---
